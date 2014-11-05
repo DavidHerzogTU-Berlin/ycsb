@@ -253,6 +253,7 @@ public class AstyanaxClient_1 extends DB {
 	public int read(String table, String key, Set<String> fields,
 			HashMap<String, ByteIterator> result) {
 		try {
+			System.out.println("A.Client.read ");
 			if (fields == null) {
 				
 				final OperationResult<ColumnList<String>> opresult = keyspace
@@ -266,8 +267,8 @@ public class AstyanaxClient_1 extends DB {
 				} 
 				if(latencyScoreStrategy.equals("continuous")) {
 					String ip = opresult.getHost().getIpAddress();
-					double mu = 0;
-					int qsz = 0;
+					double mu = 10; //todo change back to 0
+					int qsz = 11; //todo change back to 0
 					double latency = (double) opresult.getLatency();
 					 /**if (columns.getColumnByName("MU") != null) {
 						 mu = Double.valueOf(columns.getColumnByName("MU").getStringValue());
@@ -293,8 +294,8 @@ public class AstyanaxClient_1 extends DB {
 				}
 				if(latencyScoreStrategy.equals("continuous")) {
 					String ip = opresult.getHost().getIpAddress();
-					double mu = 0;
-					int qsz = 0;
+					double mu = 10; //todo change back to 0
+					int qsz = 11; //todo change back to 0
 					double latency = (double) opresult.getLatency();
 					 /**if (columns.getColumnByName("MU") != null) {
 						 mu = Double.valueOf(columns.getColumnByName("MU").getStringValue());

@@ -26,7 +26,6 @@ COMMANDS = {
 DATABASES = {
     "accumulo"     : "com.yahoo.ycsb.db.AccumuloClient",
     "basic"        : "com.yahoo.ycsb.BasicDB",
-    "astyanax-1"   : "com.yahoo.ycsb.db.AstyanaxClient_1",
     "cassandra-7"  : "com.yahoo.ycsb.db.CassandraClient7",
     "cassandra-8"  : "com.yahoo.ycsb.db.CassandraClient8",
     "cassandra-10" : "com.yahoo.ycsb.db.CassandraClient10",
@@ -43,6 +42,7 @@ DATABASES = {
     "orientdb"     : "com.yahoo.ycsb.db.OrientDBClient",
     "redis"        : "com.yahoo.ycsb.db.RedisClient", 
     "voldemort"    : "com.yahoo.ycsb.db.VoldemortClient", 
+    "astyanax-1"   : "com.yahoo.ycsb.db.AstyanaxClient_1",
 }
 
 OPTIONS = {
@@ -86,6 +86,7 @@ def find_jars(dir, database):
                 filename.startswith(database.split("-")[0]) or \
                 not "binding" in filename):
                 jars.append(os.path.join(dirpath, filename))
+    
     return jars
 
 def get_ycsb_home():

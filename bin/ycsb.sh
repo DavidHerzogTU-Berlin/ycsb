@@ -120,6 +120,6 @@ if $cygwin; then
   CLASSPATH=`cygpath -p -w "$CLASSPATH"`
   YCSB_HOME=`cygpath -w "$YCSB_HOME"`
 fi
-
+echo $CLASSPATH
 #echo "Executing command $CLASS with options $JAVA_HEAP_MAX $YCSB_OPTS $CLASS $@"
 exec "$JAVA" $JAVA_HEAP_MAX $YCSB_OPTS -classpath "$CLASSPATH" $CLASS "$@"
