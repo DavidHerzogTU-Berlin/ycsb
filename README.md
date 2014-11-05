@@ -1,4 +1,4 @@
-Yahoo! Cloud System Benchmark (YCSB)
+Yahoo! Cloud System Benchmark (YCSB) with Astyanax Client added
 ====================================
 [![Build Status](https://travis-ci.org/brianfrankcooper/YCSB.png?branch=master)](https://travis-ci.org/brianfrankcooper/YCSB)
 
