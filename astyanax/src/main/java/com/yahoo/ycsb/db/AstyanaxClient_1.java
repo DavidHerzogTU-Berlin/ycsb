@@ -79,7 +79,7 @@ public class AstyanaxClient_1 extends DB {
 	public static final String PORT_PROPERTY_DEFAULT = "9160";
 	
 	public static final String HOST_SELECTOR_STRATEGY = "hostSelectorStrategy";
-	public static final String HOST_SELECTOR_STRATEGY_DEFAULT = "ROUND_ROBIN";
+	public static final String HOST_SELECTOR_STRATEGY_DEFAULT = "C3";//changed to C3
 	
 	public static final String SCORE_STRATEGY = "scoreStrategy";
 	public static final String SCORE_STRATEGY_DEFAULT = "continuous";
