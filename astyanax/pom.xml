@@ -25,7 +25,7 @@
 	    <snapshots>
 	    <enabled>true</enabled>
 	    </snapshots>
-	    <url>file:///home/david/.m2/repository</url>
+	    <url>file:~/.m2/repository</url>
 	    </repository>
     </repositories>
 
