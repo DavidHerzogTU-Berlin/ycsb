@@ -19,6 +19,7 @@ import com.netflix.astyanax.model.Row;
 import com.netflix.astyanax.serializers.IntegerSerializer;
 import com.netflix.astyanax.serializers.StringSerializer;
 import com.netflix.astyanax.thrift.ThriftFamilyFactory;
+import com.netflix.astyanax.thrift.ThriftColumnFamilyQueryImpl;
 import com.netflix.astyanax.query.IndexQuery;
 import com.netflix.astyanax.model.ConsistencyLevel;
 import com.netflix.astyanax.model.Rows;
@@ -94,7 +95,6 @@ public class AstyanaxClient_1 extends DB {
 	private String latencyScoreStrategy;
 	static final ListeningExecutorService pool = MoreExecutors
 			.listeningDecorator(Executors.newCachedThreadPool());
-
 	public void init() throws DBException {
 		String map_size_String = getProperties().getProperty(MAP_SIZE, MAP_SIZE_DEFAULT);
 		assert (!map_size_String.equals("crash"));
@@ -267,16 +267,10 @@ public class AstyanaxClient_1 extends DB {
 				} 
 				if(latencyScoreStrategy.equals("continuous")) {
 					String ip = opresult.getHost().getIpAddress();
-					double mu = 10; //todo change back to 0
-					int qsz = 11; //todo change back to 0
+					double mu = (double) ThriftColumnFamilyQueryImpl.getMU(); 
+					int qsz = (int) ThriftColumnFamilyQueryImpl.getQSZ();
 					double latency = (double) opresult.getLatency();
-					 /**if (columns.getColumnByName("MU") != null) {
-						 mu = Double.valueOf(columns.getColumnByName("MU").getStringValue());
-	                 }
-	                 if (columns.getColumnByName("QSZ") != null) {
-	                	 qsz = Integer.valueOf(columns.getColumnByName("QSZ").getStringValue());
-	                 }**/
-	                 PendingRequestMap.addSamples(ip, mu, qsz, latency);
+	                PendingRequestMap.addSamples(ip, mu, qsz, latency);
 				}
 				
                  
@@ -294,16 +288,10 @@ public class AstyanaxClient_1 extends DB {
 				}
 				if(latencyScoreStrategy.equals("continuous")) {
 					String ip = opresult.getHost().getIpAddress();
-					double mu = 10; //todo change back to 0
-					int qsz = 11; //todo change back to 0
+					double mu = (double) ThriftColumnFamilyQueryImpl.getMU(); 
+					int qsz = (int) ThriftColumnFamilyQueryImpl.getQSZ(); 
 					double latency = (double) opresult.getLatency();
-					 /**if (columns.getColumnByName("MU") != null) {
-						 mu = Double.valueOf(columns.getColumnByName("MU").getStringValue());
-	                 }
-	                 if (columns.getColumnByName("QSZ") != null) {
-	                	 qsz = Integer.valueOf(columns.getColumnByName("QSZ").getStringValue());
-	                 }**/
-	                 PendingRequestMap.addSamples(ip, mu, qsz, latency);
+	                PendingRequestMap.addSamples(ip, mu, qsz, latency);
 				}
 				
 			}
