@@ -27,9 +27,11 @@ Example: bin/ycsb run astyanax-1 -p hosts=localhost -p map_size=1 -P workloads/w
 
 Additional Information to the steps from above:
  
- 1) This is Cassandra 1.2.18 with a modified interface. We modified it using the thrift-compiler-0.7.0 .
- 	We use this Cassandra version to generate jars and push them into the maven repository so Astyanax can use it.
- 	We do not use this Cassandra version for running a Cassandra cluster.
+ 1) This is Cassandra 1.2.18 with a custom interface. 
+ 	To costomiz it we used the thrift-compiler-0.7.0 .
+ 	This Cassandra version is used to generate jars to push them into the maven repository
+ 	so Astyanax can use it. We do not use this Cassandra version for running a Cassandra cluster.
 
- 4) This is the Cassandra version we use for running a 3 node cluster. It also has a modified interface which was compiled
- 	with the thrift-compiler-0.9.0 . Astyanax is not able to use the jars from this version. 
+ 4) This is the Cassandra version we use for running a 3 node cluster. 
+ 	It also has a modified interface which was compiled with the thrift-compiler-0.9.0 . 
+ 	Astyanax is not able to use the jars from this version. 
