@@ -253,9 +253,7 @@ public class AstyanaxClient_1 extends DB {
 	public int read(String table, String key, Set<String> fields,
 			HashMap<String, ByteIterator> result) {
 		try {
-			System.out.println("A.Client.read ");
 			if (fields == null) {
-				
 				final OperationResult<ColumnList<String>> opresult = keyspace
 						.prepareQuery(EMP_CF).getKey(key).execute();
 				
@@ -265,17 +263,9 @@ public class AstyanaxClient_1 extends DB {
 						columns.getColumnByName(s)
 						.getStringValue()));
 				} 
-				if(latencyScoreStrategy.equals("continuous")) {
-					String ip = opresult.getHost().getIpAddress();
-					double mu = (double) ThriftColumnFamilyQueryImpl.getMU(); 
-					int qsz = (int) ThriftColumnFamilyQueryImpl.getQSZ();
-					double latency = (double) opresult.getLatency();
-	                PendingRequestMap.addSamples(ip, mu, qsz, latency);
-				}
 				
                  
 			} else {
-				
 				final OperationResult<ColumnList<String>> opresult = keyspace
 						.prepareQuery(EMP_CF).getKey(key)
 						.withColumnSlice(fields).execute();
@@ -286,14 +276,6 @@ public class AstyanaxClient_1 extends DB {
 						columns.getColumnByName(s)
 						.getStringValue()));
 				}
-				if(latencyScoreStrategy.equals("continuous")) {
-					String ip = opresult.getHost().getIpAddress();
-					double mu = (double) ThriftColumnFamilyQueryImpl.getMU(); 
-					int qsz = (int) ThriftColumnFamilyQueryImpl.getQSZ(); 
-					double latency = (double) opresult.getLatency();
-	                PendingRequestMap.addSamples(ip, mu, qsz, latency);
-				}
-				
 			}
 			return Ok;
 
