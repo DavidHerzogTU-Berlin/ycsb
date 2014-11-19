@@ -42,15 +42,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import com.netflix.astyanax.connectionpool.impl.PendingRequestMap;
-
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ForwardingListenableFuture;
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
 import com.netflix.astyanax.connectionpool.exceptions.OperationException;
 import com.netflix.astyanax.connectionpool.Host;
+
 public class AstyanaxClient_1 extends DB {
 	public static final int Ok = 0;
 	public static final int Error = -1;
@@ -93,8 +87,7 @@ public class AstyanaxClient_1 extends DB {
 	private static Object lock = new Object();
 	private static boolean needTotSetInit = true;
 	private String latencyScoreStrategy;
-	static final ListeningExecutorService pool = MoreExecutors
-			.listeningDecorator(Executors.newCachedThreadPool());
+
 	public void init() throws DBException {
 		String map_size_String = getProperties().getProperty(MAP_SIZE, MAP_SIZE_DEFAULT);
 		assert (!map_size_String.equals("crash"));
