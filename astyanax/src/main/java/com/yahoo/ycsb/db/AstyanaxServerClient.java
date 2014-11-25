@@ -7,11 +7,48 @@ import java.util.HashMap;
 import java.nio.ByteBuffer;
 import java.util.Map.Entry;
 import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 public class AstyanaxServerClient extends DB {
 	public static final int Ok = 0;
 	public static final int Error = -1;
 
+	public static final String SERVER_IP = "server_ip";
+	public static final String SERVER_IP_DEFAULT = "127.0.0.1";
+
+	public static final String SERVER_PORT = "server_port";
+	public static final String SERVER_PORT_DEFAULT = "2345";
+
+	private Socket socket;
+	private PrintWriter out;
+	private BufferedReader in;
+	
 	public void init() throws DBException {
+		String serverIP = getProperties().getProperty(SERVER_IP, SERVER_IP_DEFAULT);
+    	int portNumber = Integer.parseInt(getProperties().getProperty(SERVER_PORT, SERVER_PORT_DEFAULT));
+
+		try {
+            socket = new Socket(serverIP, portNumber);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+         
+            System.out.println("Connecting to server...");
+            System.out.println("Server response: " + in.readLine());
+            
+        } catch (UnknownHostException e) {
+            System.err.println("Could not find server " + serverIP);
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println("Couldn't get I/O for the connection to " +
+                serverIP);
+            System.exit(1);
+        }
 
 	}
 	/**
