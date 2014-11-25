@@ -27,7 +27,7 @@ public class AstyanaxServerClient extends DB {
 	private Socket socket;
 	private PrintWriter out;
 	private BufferedReader in;
-	
+
 	public void init() throws DBException {
 		String serverIP = getProperties().getProperty(SERVER_IP, SERVER_IP_DEFAULT);
     	int portNumber = Integer.parseInt(getProperties().getProperty(SERVER_PORT, SERVER_PORT_DEFAULT));
@@ -66,7 +66,25 @@ public class AstyanaxServerClient extends DB {
 	 */
 	public int insert(String table, String key,
 		HashMap<String, ByteIterator> values) {
-		return Ok;
+		try {
+			String valuesToString = "";
+			for (Entry<String, ByteIterator> entry : values.entrySet()) {
+				valuesToString = valuesToString + entry.getKey() + "§" + entry.getValue().toString() + "|" ;
+			}
+			String insertRequest = "write|" + key + "|" + valuesToString;
+			out.println(insertRequest);
+			String serverResponse = in.readLine();
+			if(serverResponse == null)
+				return Error;
+			if(serverResponse.equals("write:success"))
+				return Ok;
+			else
+			return Error;
+		} catch (IOException e) {
+			System.out.println(e);
+            return Error;
+        }
+		
 	}
 
 	/**
