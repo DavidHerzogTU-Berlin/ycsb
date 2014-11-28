@@ -76,7 +76,7 @@ public class AstyanaxServerClient extends DB {
 			String serverResponse = in.readLine();
 			if(serverResponse == null)
 				return Error;
-			if(serverResponse.equals("write:success"))
+			if(serverResponse.contains("write:success"))
 				return Ok;
 			else
 			return Error;
@@ -122,15 +122,25 @@ public class AstyanaxServerClient extends DB {
 	public int read(String table, String key, Set<String> fields,
 			HashMap<String, ByteIterator> result) {
 		try { //todo: if fields not null
-			String readRequest = "read|" + key ;
+
+			String readRequest = "";
+			if (fields == null) {
+				readRequest = "read|" + key;
+			} else {
+				readRequest = "read|" + key;
+				for(String s : fields) {
+					readRequest = readRequest + "|" + s;
+				}
+			}
+			
 			out.println(readRequest);
 			String serverResponse = in.readLine();
 			if(serverResponse == null)
 				return Error;
-			if(serverResponse.contains("success"))
-				return Ok;
+			if(serverResponse.contains("READ_FAILOR"))
+				return Error;
 			else
-			return Error;
+				return Ok;
 		} catch (IOException e) {
 			System.out.println(e);
             return Error;
