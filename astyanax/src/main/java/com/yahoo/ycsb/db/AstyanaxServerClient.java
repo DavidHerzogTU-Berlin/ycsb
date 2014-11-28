@@ -121,7 +121,7 @@ public class AstyanaxServerClient extends DB {
 	 */
 	public int read(String table, String key, Set<String> fields,
 			HashMap<String, ByteIterator> result) {
-		try { //todo: if fields not null
+		try { 
 
 			String readRequest = "";
 			if (fields == null) {
