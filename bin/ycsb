@@ -43,6 +43,7 @@ DATABASES = {
     "redis"        : "com.yahoo.ycsb.db.RedisClient", 
     "voldemort"    : "com.yahoo.ycsb.db.VoldemortClient", 
     "astyanax-1"   : "com.yahoo.ycsb.db.AstyanaxClient_1",
+    "astyServer"   : "com.yahoo.ycsb.db.AstyanaxServerClient",
 }
 
 OPTIONS = {
