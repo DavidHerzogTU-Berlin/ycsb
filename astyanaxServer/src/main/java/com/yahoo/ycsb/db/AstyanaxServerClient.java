@@ -18,6 +18,7 @@ import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
+import org.apache.astyanax.thrift.TalkToCassandraWithAstyanaxC3;
 
 public class AstyanaxServerClient extends DB {
 	public static final int Ok = 0;
@@ -29,7 +30,7 @@ public class AstyanaxServerClient extends DB {
 	public static final String SERVER_PORT = "server_port";
 	public static final String SERVER_PORT_DEFAULT = "2345";
 	private TTransport transport;
-	private MultiplicationService.Client client
+	private TalkToCassandraWithAstyanaxC3.Client client;
 
 	public void init() throws DBException {
 		String serverIP = getProperties().getProperty(SERVER_IP, SERVER_IP_DEFAULT);
@@ -40,7 +41,10 @@ public class AstyanaxServerClient extends DB {
 
 		      TProtocol protocol = new  TBinaryProtocol(transport);
 		      client = new TalkToCassandraWithAstyanaxC3.Client(protocol);
-
+		      if(client.init())
+		      	System.out.println("INIT on server side succeded");
+		      else 
+		      	System.out.println("INIT on server side failed");
 		    } catch (TException x) {
 		      x.printStackTrace();
 		    } 
@@ -66,7 +70,7 @@ public class AstyanaxServerClient extends DB {
 			Map<String, String> stringValues = new HashMap<String, String>();
 
 			for (Entry<String, ByteIterator> entry : values.entrySet()) {
-				stringValues.add(entry.getKey(), entry.getValue().toString());
+				stringValues.put(entry.getKey(), entry.getValue().toString());
 			}
 
 			if(client.write(key, stringValues))
@@ -119,8 +123,8 @@ public class AstyanaxServerClient extends DB {
 
 			Map<String, String> stringResult = new HashMap<String, String>();
 			stringResult = client.read(key, fields);
-
-		} catch (IOException e) {
+			return Ok;
+		} catch (TException e) {
 			e.printStackTrace();
             return Error;
         }
