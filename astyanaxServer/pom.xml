@@ -10,18 +10,7 @@
   <artifactId>astyanax-server-binding</artifactId>
   <name>AstyanaxServer</name>
   <packaging>jar</packaging>
-
-      <repositories>
-	    <repository>
-	    <id>local-repo</id>
-	    <snapshots>
-	    <enabled>true</enabled>
-	    </snapshots>
-	    <url>file:~/.m2/repository</url>
-	    </repository>
-
-    </repositories>
-
+  
   <dependencies>
      
      <dependency>
@@ -39,29 +28,6 @@
   
   <build>
     <plugins>
-      
-      <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-      <plugin>
-                <groupId>br.com.ingenieux</groupId>
-                <artifactId>beanstalk-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>expose-security-credentials</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>expose-security-credentials</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
