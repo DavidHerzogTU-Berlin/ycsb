@@ -45,8 +45,12 @@ public class AstyanaxServerClient extends DB {
 		      	System.out.println("INIT on server side succeded");
 		      else 
 		      	System.out.println("INIT on server side failed");
+		      transport.close();
 		    } catch (TException x) {
+		    	System.out.println("AstyanaxServerClient.init() failed");
+		    	transport.close();
 		      x.printStackTrace();
+
 		    } 
 
 	}
@@ -66,20 +70,25 @@ public class AstyanaxServerClient extends DB {
 	public int insert(String table, String key,
 		HashMap<String, ByteIterator> values) {
 		try {
-
+			transport.open();
 			Map<String, String> stringValues = new HashMap<String, String>();
 
 			for (Entry<String, ByteIterator> entry : values.entrySet()) {
 				stringValues.put(entry.getKey(), entry.getValue().toString());
 			}
 
-			if(client.write(key, stringValues))
+			if(client.write(key, stringValues)){
+				transport.close();
 				return Ok;
-			else
+			}
+			else {
+				transport.close();
 				return Error;
+			}
 
 		} catch (TException e) {
 			e.printStackTrace();
+			transport.close();
             return Error;
         }
 		
@@ -120,12 +129,14 @@ public class AstyanaxServerClient extends DB {
 	public int read(String table, String key, Set<String> fields,
 			HashMap<String, ByteIterator> result) {
 		try { 
-
+			transport.open();
 			Map<String, String> stringResult = new HashMap<String, String>();
 			stringResult = client.read(key, fields);
+			transport.close();
 			return Ok;
 		} catch (TException e) {
 			e.printStackTrace();
+			transport.close();
             return Error;
         }
 	}
